@@ -1,5 +1,6 @@
 package org.fao.fenix.dissertation.rest;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
@@ -16,10 +17,14 @@ import java.io.*;
 @Path("/test")
 public class RESTTest {
 
+    private Logger LOGGER = Logger.getLogger(RESTTest.class);
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{name}")
     public Response sayHello(@PathParam("name") final String name) throws Exception {
+
+        LOGGER.info("Hallo world!");
 
         // Initiate the stream
         StreamingOutput stream = new StreamingOutput() {
