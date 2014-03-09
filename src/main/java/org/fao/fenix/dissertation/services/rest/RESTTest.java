@@ -1,4 +1,4 @@
-package org.fao.fenix.dissertation.rest;
+package org.fao.fenix.dissertation.services.rest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;

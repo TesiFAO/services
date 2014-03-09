@@ -1,4 +1,4 @@
-package org.fao.fenix.dissertation.rest;
+package org.fao.fenix.dissertation.services.rest;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

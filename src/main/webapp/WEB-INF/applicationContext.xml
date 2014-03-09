@@ -15,10 +15,10 @@
 	</bean>
 	
 	<!-- Jersey auto-scan -->
-	<context:component-scan base-package="org.fao.fenix.dissertation" />
+	<context:component-scan base-package="org.fao.fenix.dissertation.services" />
 
-    <!--<bean id="datasourcePool" class="org.fao.fenix.wds.core.datasource.DatasourcePool" lazy-init="false" init-method="init">-->
-        <!--<constructor-arg value="/datasources" />-->
-    <!--</bean>-->
+    <bean id="configReader" class="org.fao.fenix.dissertation.services.utils.ConfigReader" lazy-init="false" init-method="init">
+        <constructor-arg value="/config" />
+    </bean>
 
 </beans>
