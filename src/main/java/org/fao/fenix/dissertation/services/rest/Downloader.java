@@ -36,13 +36,14 @@ public class Downloader {
         /* Compute result */
         DatasourceBean modis = configReader.getDatasource("MODIS");
 
-        String path = modis.getBaseUrl() + "/2000/049/MOD13A2.A2000049.h00v08.005.2006270203425.hdf";
+        String path = modis.getBaseUrl() + "/2000/049/MOD13A2.A2000049.h20v08.005.2006269161232.hdf";
+        System.out.println(path);
         URL url = new URL(path);
         String userAgent = "Opera/9.63 (Windows NT 5.1; U; en) Presto/2.1.1";
         downloadFromUrl(url, "/Users/simona/Desktop/test.hdf", userAgent);
 
         /* Stream result */
-        return Response.status(200).entity("OK").build();
+        return Response.status(200).entity(path).build();
 
     }
 
