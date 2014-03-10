@@ -1,7 +1,8 @@
 [
     {
         "id"        :   "MODIS",
-        "baseUrl"   :   "ftp://ladsweb.nascom.nasa.gov/allData/5/MOD13A2",
+        "ftpUrl"    :   "ladsweb.nascom.nasa.gov",
+        "baseUrl"   :   "/allData/5/MOD13A2",
         "startIdx"  :   1,
         "endIdx"    :   353,
         "minYear"   :   2000,

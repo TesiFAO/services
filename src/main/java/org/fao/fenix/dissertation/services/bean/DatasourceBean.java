@@ -8,6 +8,8 @@ public class DatasourceBean {
 
     private String id;
 
+    private String ftpUrl;
+
     private String baseUrl;
 
     private int startIdx;
@@ -66,16 +68,12 @@ public class DatasourceBean {
         this.maxYear = maxYear;
     }
 
-    @Override
-    public String toString() {
-        return "DatasourceBean{" +
-                "id='" + id + '\'' +
-                ", baseUrl='" + baseUrl + '\'' +
-                ", startIdx=" + startIdx +
-                ", endIdx=" + endIdx +
-                ", minYear=" + minYear +
-                ", maxYear=" + maxYear +
-                '}';
+    public String getFtpUrl() {
+        return ftpUrl;
+    }
+
+    public void setFtpUrl(String ftpUrl) {
+        this.ftpUrl = ftpUrl;
     }
 
 }
