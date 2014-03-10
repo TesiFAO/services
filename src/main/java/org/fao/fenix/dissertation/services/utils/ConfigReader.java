@@ -51,6 +51,8 @@ public class ConfigReader {
                 b.setId(reader.nextString());
             } else if (name.equalsIgnoreCase("baseUrl")) {
                 b.setBaseUrl(reader.nextString());
+            } else if (name.equalsIgnoreCase("downloadDir")) {
+                b.setDownloadDir(reader.nextString());
             } else if (name.equalsIgnoreCase("ftpUrl")) {
                 b.setFtpUrl(reader.nextString());
             } else if (name.equalsIgnoreCase("startIdx")) {

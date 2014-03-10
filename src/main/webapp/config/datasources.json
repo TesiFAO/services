@@ -1,11 +1,12 @@
 [
     {
-        "id"        :   "MODIS",
-        "ftpUrl"    :   "ladsweb.nascom.nasa.gov",
-        "baseUrl"   :   "/allData/5/MOD13A2",
-        "startIdx"  :   1,
-        "endIdx"    :   353,
-        "minYear"   :   2000,
-        "maxYear"   :   2014
+        "id"            :   "MODIS",
+        "ftpUrl"        :   "ladsweb.nascom.nasa.gov",
+        "baseUrl"       :   "/allData/5/MOD13A2",
+        "startIdx"      :   1,
+        "endIdx"        :   353,
+        "minYear"       :   2000,
+        "maxYear"       :   2014,
+        "downloadDir"   :   "/home/kalimaha/Desktop/MODIS"
     }
 ]

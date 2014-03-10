@@ -12,6 +12,8 @@ public class DatasourceBean {
 
     private String baseUrl;
 
+    private String downloadDir;
+
     private int startIdx;
 
     private int endIdx;
@@ -74,6 +76,14 @@ public class DatasourceBean {
 
     public void setFtpUrl(String ftpUrl) {
         this.ftpUrl = ftpUrl;
+    }
+
+    public String getDownloadDir() {
+        return downloadDir;
+    }
+
+    public void setDownloadDir(String downloadDir) {
+        this.downloadDir = downloadDir;
     }
 
 }

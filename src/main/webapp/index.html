@@ -9,19 +9,94 @@
         <link href='http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css' rel='stylesheet'>
         <link href='http://fenixapps.fao.org/repository/js/chosen/1.0.0/chosen.min.css' rel='stylesheet'>
         <link href='css/faostat-download-widget.css' rel='stylesheet'>
+        <script type='text/javascript'>
+            function init() {
+                var s = '';
+                for (var i = 2013 ; i >= 2000 ; i--)
+                    s += '<option value="' + i + '">' + i + '</option>'
+                document.getElementById('browse_years').innerHTML = s;
+                s = '';
+                for (var i = 1 ; i <= 35 ; i++) {
+                    var tmp = '';
+                    if (i < 10) {
+                        tmp = '00' + i
+                    } else {
+                        tmp = '0' + i
+                    }
+                    s += '<option value="' + tmp + '">' + tmp + '</option>'
+                }
+                document.getElementById('browse_days').innerHTML = s;
+                $('#browse_years').chosen();
+                $('#browse_days').chosen();
+            };
+            function browseModis() {
+                $.ajax({
+                    type    :   'GET',
+                    url     :   'http://localhost:8080/services/rest/browse/modis/' + $('#browse_years').val() + '/' + $('#browse_days').val(),
+                    success : function(response) {
+                        var json = response;
+                        if (typeof(response) == 'string')
+                            json = $.parseJSON(response);
+                        var s = '';
+                        for (var i = 0 ; i < json.length ; i++)
+                            s += '<option value="' + json[i] + '">' + json[i] + '</option>';
+                        document.getElementById('browse_results').innerHTML = s;
+                        $('#browse_results').chosen();
+                    },
+                    error : function(err, b, c) {
+
+                    }
+                });
+            };
+            function downloadModis() {
+                var files = $('#browse_results').val();
+                for (var i = 0 ; i < files.length ; i++) {
+                    $.ajax({
+                        type    :   'GET',
+                        url     :   'http://localhost:8080/services/rest/download/modis/' + $('#browse_years').val() + '/' + $('#browse_days').val() + '/' + files[i],
+                        success : function(response) {
+                            $('#downloaded_layers').append('<li>' + response + '</li>');
+                        },
+                        error : function(err, b, c) {
+
+                        }
+                    });
+                }
+            };
+        </script>
     </head>
 
-    <body>
+    <body onload='init();'>
 
         <div class='container'>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <H1>MODIS Test</H1>
+                </div>
+
+            </div>
 
             <br>
 
             <div class='row'>
 
-                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-                    <button class='btn btn-success' style='width: 100%;' target='_blank' onclick=''>
-                        REST: Test
+                <div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>
+                    <select id='browse_years' style='width: 100%;'>
+
+                    </select>
+                </div>
+
+                <div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>
+                    <select id='browse_days' style='width: 100%;'>
+
+                    </select>
+                </div>
+
+                <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+                    <button class='btn btn-success btn-xs' style='width: 100%;' onclick='browseModis();'>
+                        List Available Layers
                     </button>
                 </div>
 
@@ -32,9 +107,50 @@
             <div class='row'>
 
                 <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-                    <button class='btn btn-success' style='width: 100%;'>
-                        REST: Downloader
+                    <select id='browse_results' style='width: 100%;' multiple=''>
+
+                    </select>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+                    <button class='btn btn-success btn-xs' style='width: 100%;'>
+                        Select All
                     </button>
+                </div>
+                <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+                    <button class='btn btn-danger btn-xs' style='width: 100%;'>
+                        Clear Selection
+                    </button>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <button class='btn btn-primary' style='width: 100%;' onclick='downloadModis();'>
+                        Download Selected Layers
+                    </button>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <ul id='downloaded_layers' style='width: 100%;'>
+
+                    </ul>
                 </div>
 
             </div>
