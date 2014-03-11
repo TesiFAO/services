@@ -123,7 +123,7 @@ public class Browser {
                 /* Write the result of the query */
                 writer.write("[");
                 for (int i = 0 ; i < l.size() ; i++) {
-                    writer.write(l.get(i));
+                    writer.write(g.toJson(l.get(i)));
                     if (i < l.size() - 1)
                         writer.write(",");
                 }

@@ -44,7 +44,7 @@ public class Downloader {
         client.disconnect(true);
 
         /* Stream result */
-        String m = filename + " successfully downloaded and available at " + modis.getDownloadDir() + File.separator + filename;
+        String m = filename;
         return Response.status(200).entity(m).build();
 
     }

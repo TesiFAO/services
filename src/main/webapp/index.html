@@ -10,6 +10,7 @@
         <link href='http://fenixapps.fao.org/repository/js/chosen/1.0.0/chosen.min.css' rel='stylesheet'>
         <link href='css/faostat-download-widget.css' rel='stylesheet'>
         <script type='text/javascript'>
+            var bands = [];
             function init() {
                 var s = '';
                 for (var i = 2013 ; i >= 2000 ; i--)
@@ -28,6 +29,7 @@
                 document.getElementById('browse_days').innerHTML = s;
                 $('#browse_years').chosen();
                 $('#browse_days').chosen();
+                $('#bands').chosen();
             };
             function browseModis() {
                 $.ajax({
@@ -55,7 +57,7 @@
                         type    :   'GET',
                         url     :   'http://localhost:8080/services/rest/download/modis/' + $('#browse_years').val() + '/' + $('#browse_days').val() + '/' + files[i],
                         success : function(response) {
-                            $('#downloaded_layers').append('<li>' + response + '</li>');
+                            $('#downloaded_layers').append('<li style="cursor: pointer;" onclick="listSubdatasets(\'' + response + '\')">' + response + '</li>');
                         },
                         error : function(err, b, c) {
 
@@ -63,7 +65,38 @@
                     });
                 }
             };
+            function listSubdatasets(filename) {
+                $.ajax({
+                    type    :   'GET',
+                    url     :   'http://localhost:8080/services/rest/browse/modis/subdatasets/' + filename.substring(0, filename.indexOf('.hdf')),
+                    success : function(response) {
+                        var json = response;
+                        if (typeof(response) == 'string')
+                            json = $.parseJSON(response);
+                        bands = json;
+                        for (var i = 0 ; i < json.length ; i++)
+                            $('#subdatasets').append('<li style="cursor: pointer;" onclick="selectBand(\'' + i + '\')">' + json[i] + '</li>');
+                    },
+                    error : function(err, b, c) {
+
+                    }
+                });
+            };
+            function selectBand(band) {
+                var s = '<option value="' + bands[band] + '">' + bands[band] + '</option>';
+                $('#bands').append(s);
+                $('#bands').trigger('chosen:updated');
+            };
         </script>
+        <style>
+            .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+                height: 25px;
+            }
+            .chosen-container-multi .chosen-choices {
+                height: 25px;
+                line-height: 25px;
+            }
+        </style>
     </head>
 
     <body onload='init();'>
@@ -74,6 +107,16 @@
 
                 <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
                     <H1>MODIS Test</H1>
+                </div>
+
+            </div>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <div align='center'>
+                        <img class='img-responsive' src='images/modis_grid.jpg'/>
+                    </div>
                 </div>
 
             </div>
@@ -148,9 +191,63 @@
             <div class='row'>
 
                 <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <H2>Downloaded Layers</H2>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
                     <ul id='downloaded_layers' style='width: 100%;'>
 
                     </ul>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <H2>Available Subdatasets</H2>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <ul id='subdatasets' style='width: 100%;'>
+
+                    </ul>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <H2>Extract and Mosaic Bands</H2>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class='row'>
+
+                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                    <select id='bands' style='width: 100%;' multiple=''>
+
+                    </select>
                 </div>
 
             </div>
