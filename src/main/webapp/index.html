@@ -13,11 +13,11 @@
             var bands = [];
             function init() {
                 var s = '';
-                for (var i = 2013 ; i >= 2000 ; i--)
+                for (var i = 2014 ; i >= 2000 ; i--)
                     s += '<option value="' + i + '">' + i + '</option>'
                 document.getElementById('browse_years').innerHTML = s;
                 s = '';
-                for (var i = 1 ; i <= 35 ; i++) {
+                for (var i = 1 ; i <= 365 ; i++) {
                     var tmp = '';
                     if (i < 10) {
                         tmp = '00' + i
@@ -40,8 +40,11 @@
                         if (typeof(response) == 'string')
                             json = $.parseJSON(response);
                         var s = '';
-                        for (var i = 0 ; i < json.length ; i++)
-                            s += '<option value="' + json[i] + '">' + json[i] + '</option>';
+                        for (var i = 0 ; i < json.length ; i++) {
+                            var tmp = json[i].substring(1 + json[i].indexOf('.h'), json[i].indexOf('.h') + 7);
+                            var lbl = 'Horizontal: ' + tmp.substring(1, 3) + ', Vertical: ' + tmp.substring(4);
+                            s += '<option selected value="' + json[i] + '">' + lbl + '</option>';
+                        }
                         document.getElementById('browse_results').innerHTML = s;
                         $('#browse_results').chosen();
                     },
